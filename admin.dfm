@@ -1,7 +1,7 @@
 object fAdmin: TfAdmin
-  Left = 191
+  Left = 190
   Top = 130
-  Width = 963
+  Width = 964
   Height = 583
   Caption = 'Halaman Admin'
   Color = clBtnFace
@@ -18592,8 +18592,8 @@ object fAdmin: TfAdmin
   object Label1: TLabel
     Left = 361
     Top = 0
-    Width = 193
-    Height = 37
+    Width = 208
+    Height = 54
     Caption = 'Admin Panel'
     Font.Charset = ANSI_CHARSET
     Font.Color = clWhite
@@ -18997,28 +18997,6 @@ object fAdmin: TfAdmin
     TabOrder = 31
     OnClick = busHapusClick
   end
-  object cbAkun: TSMDBComboBox
-    Left = 416
-    Top = 400
-    Width = 121
-    Height = 21
-    DataField = 'id'
-    DataSource = ds_akun
-    EnableValues = False
-    ItemHeight = 13
-    TabOrder = 32
-  end
-  object cbBus: TSMDBComboBox
-    Left = 416
-    Top = 424
-    Width = 121
-    Height = 21
-    DataField = 'id'
-    DataSource = ds_bus
-    EnableValues = False
-    ItemHeight = 13
-    TabOrder = 33
-  end
   object pStatus: TEdit
     Left = 416
     Top = 448
@@ -19027,7 +19005,7 @@ object fAdmin: TfAdmin
     Hint = 'Masukan Status'
     ParentShowHint = False
     ShowHint = True
-    TabOrder = 34
+    TabOrder = 32
   end
   object edTSewa: TEdit
     Left = 544
@@ -19037,7 +19015,7 @@ object fAdmin: TfAdmin
     Hint = 'Masukan Tanggal Sewa'
     ParentShowHint = False
     ShowHint = True
-    TabOrder = 35
+    TabOrder = 33
   end
   object edTKembali: TEdit
     Left = 544
@@ -19047,7 +19025,7 @@ object fAdmin: TfAdmin
     Hint = 'Masukan Tanggal Kembali'
     ParentShowHint = False
     ShowHint = True
-    TabOrder = 36
+    TabOrder = 34
   end
   object dbePStatus: TDBEdit
     Left = 672
@@ -19056,7 +19034,7 @@ object fAdmin: TfAdmin
     Height = 21
     DataField = 'status'
     DataSource = ds_penyewaa
-    TabOrder = 37
+    TabOrder = 35
   end
   object penyewaanSubmit: TButton
     Left = 416
@@ -19064,7 +19042,8 @@ object fAdmin: TfAdmin
     Width = 75
     Height = 25
     Caption = 'Submit'
-    TabOrder = 38
+    TabOrder = 36
+    OnClick = penyewaanSubmitClick
   end
   object penyewaanReset: TButton
     Left = 496
@@ -19072,7 +19051,8 @@ object fAdmin: TfAdmin
     Width = 75
     Height = 25
     Caption = 'Reset'
-    TabOrder = 39
+    TabOrder = 37
+    OnClick = penyewaanResetClick
   end
   object penyewaanHapus: TButton
     Left = 672
@@ -19080,13 +19060,79 @@ object fAdmin: TfAdmin
     Width = 75
     Height = 25
     Caption = 'Hapus'
+    TabOrder = 38
+    OnClick = penyewaanHapusClick
+  end
+  object cb_akun: TDBLookupComboBox
+    Left = 416
+    Top = 400
+    Width = 121
+    Height = 21
+    DataField = 'akun'
+    DataSource = ds_penyewaa
+    TabOrder = 39
+  end
+  object cb_bus: TDBLookupComboBox
+    Left = 416
+    Top = 424
+    Width = 121
+    Height = 21
+    DataField = 'bus'
+    DataSource = ds_penyewaa
     TabOrder = 40
+  end
+  object btnLogout: TButton
+    Left = 832
+    Top = 16
+    Width = 75
+    Height = 25
+    Caption = 'Logout'
+    TabOrder = 41
+    OnClick = btnLogoutClick
   end
   object zq_akun: TZQuery
     Connection = fLogin.zconn
+    Active = True
     SQL.Strings = (
       'SELECT * FROM akun')
     Params = <>
+    object zq_akunid: TIntegerField
+      FieldName = 'id'
+      Required = True
+    end
+    object zq_akunnama: TStringField
+      FieldName = 'nama'
+      Size = 50
+    end
+    object zq_akuntelp: TStringField
+      FieldName = 'telp'
+      Size = 13
+    end
+    object zq_akunalamat: TStringField
+      FieldName = 'alamat'
+      Size = 255
+    end
+    object zq_akunusername: TStringField
+      FieldName = 'username'
+      Required = True
+      Size = 50
+    end
+    object zq_akunpassword: TStringField
+      FieldName = 'password'
+      Required = True
+      Size = 255
+    end
+    object zq_akunrole: TStringField
+      FieldName = 'role'
+      Required = True
+      Size = 8
+    end
+    object zq_akuncreated_at: TDateTimeField
+      FieldName = 'created_at'
+    end
+    object zq_akunupdated_at: TDateTimeField
+      FieldName = 'updated_at'
+    end
   end
   object ds_akun: TDataSource
     DataSet = zq_akun
@@ -19098,6 +19144,7 @@ object fAdmin: TfAdmin
   end
   object zq_bus: TZQuery
     Connection = fLogin.zconn
+    Active = True
     SQL.Strings = (
       'SELECT * FROM bus')
     Params = <>
@@ -19113,5 +19160,52 @@ object fAdmin: TfAdmin
       'SELECT * FROM penyewaan')
     Params = <>
     Top = 224
+    object zq_penyewaanid: TIntegerField
+      FieldName = 'id'
+      Required = True
+    end
+    object zq_penyewaanid_akun: TIntegerField
+      FieldName = 'id_akun'
+      Required = True
+    end
+    object zq_penyewaanid_bus: TIntegerField
+      FieldName = 'id_bus'
+      Required = True
+    end
+    object zq_penyewaantanggal_sewa: TDateField
+      FieldName = 'tanggal_sewa'
+      Required = True
+    end
+    object zq_penyewaantanggal_kembali: TDateField
+      FieldName = 'tanggal_kembali'
+    end
+    object zq_penyewaanstatus: TStringField
+      FieldName = 'status'
+      Size = 10
+    end
+    object zq_penyewaancreated_at: TDateTimeField
+      FieldName = 'created_at'
+    end
+    object zq_penyewaanupdated_at: TDateTimeField
+      FieldName = 'updated_at'
+    end
+    object zq_penyewaanakun: TStringField
+      FieldKind = fkLookup
+      FieldName = 'akun'
+      LookupDataSet = zq_akun
+      LookupKeyFields = 'id'
+      LookupResultField = 'nama'
+      KeyFields = 'id_akun'
+      Lookup = True
+    end
+    object zq_penyewaanbus: TStringField
+      FieldKind = fkLookup
+      FieldName = 'bus'
+      LookupDataSet = zq_bus
+      LookupKeyFields = 'id'
+      LookupResultField = 'nama_bus'
+      KeyFields = 'id_bus'
+      Lookup = True
+    end
   end
 end
